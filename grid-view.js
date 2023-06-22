@@ -77,7 +77,7 @@ function applyImageStyles() {
   const gridContainer = document.getElementById('grid-container');
   const nonImageElements = document.querySelectorAll('body > :not(img)');
   const originalParents = new Map();
-  const fullImage = document.querySelector('.full-image');
+const fullImages = document.querySelectorAll('.full-image, .full-image.mobile');
   const projectVideos = document.querySelectorAll('.project-video');
   const muteButton = document.getElementById('muteBtn');
   let isGridViewActive = false;
@@ -88,14 +88,14 @@ gridButton.addEventListener('click', function () {
   if (isGridViewActive) {
     exitGridView();
     showMuteButton();
-    fullImage.style.height = fullImageOriginalHeight + 'px';
+    fullImages.style.height = fullImagesOriginalHeight + 'px';
     restorePortraitImageWidth();
   } else {
     enterGridView();
     hideMuteButton();
 fadeInImage(image);
 fadeInVideo(video);
-    fullImage.style.height = 'auto';
+    fullImages.style.height = 'auto';
     applyImageStyles();
   }
 });
@@ -123,7 +123,7 @@ fadeInVideo(video);
     }
   });
 
-  fullImage.style.position = 'relative';
+  fullImages.style.position = 'relative';
 
   gsap.to(mediaElements, {
     duration: 0.5,
@@ -195,7 +195,7 @@ fadeInVideo(video);
     img.setAttribute('data-action', null);
   });
 
-  fullImage.style.position = 'absolute';
+  fullImages.style.position = 'absolute';
 
   window.scrollTo(scrollPosition.x, scrollPosition.y);
 
