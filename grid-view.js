@@ -1,16 +1,22 @@
 function applyImageStyles() {
   const images = Array.from(document.querySelectorAll('img'));
   const videos = Array.from(document.querySelectorAll('video'));
+  const fadeInDuration = 300; // Duration of the fade-in animation in milliseconds
+
+  const imagesToAnimate = [];
+  const videosToAnimate = [];
 
   images.forEach(function (image) {
     if (!image.complete) {
       image.addEventListener('load', function () {
         addComboClass(image);
-        fadeInImage(image);
+        imagesToAnimate.push(image);
+        checkAnimationCompletion();
       });
     } else {
       addComboClass(image);
-      fadeInImage(image);
+      imagesToAnimate.push(image);
+      checkAnimationCompletion();
     }
   });
 
@@ -19,48 +25,67 @@ function applyImageStyles() {
       if (isGridViewActive) {
         video.style.gridColumn = 'span 2';
       }
-      fadeInVideo(video);
+      videosToAnimate.push(video);
+      checkAnimationCompletion();
     });
   });
-}
 
-function addComboClass(image) {
-  if (image.naturalHeight > image.naturalWidth) {
-    image.classList.add('portrait');
-    image.classList.remove('landscape');
-  } else {
-    image.classList.add('landscape');
-    image.classList.remove('portrait');
+  function checkAnimationCompletion() {
+    if (imagesToAnimate.length === images.length && videosToAnimate.length === videos.length) {
+      animateImages();
+      animateVideos();
+    }
   }
-}
 
-function fadeInImage(image) {
-  image.style.opacity = '0';
-  image.style.transition = 'opacity 0.3s';
-  setTimeout(function () {
-    image.style.opacity = '1';
-  }, 0);
-}
+  function animateImages() {
+    imagesToAnimate.forEach(function (image) {
+      fadeInImage(image);
+    });
+  }
 
-function fadeInVideo(video) {
-  video.style.opacity = '0';
-  video.style.transition = 'opacity 0.3s';
-  setTimeout(function () {
-    video.style.opacity = '1';
-  }, 0);
-}
+  function animateVideos() {
+    videosToAnimate.forEach(function (video) {
+      fadeInVideo(video);
+    });
+  }
 
-const gridButton = document.getElementById('grid');
-const closeButton = document.getElementById('close');
-const gridContainer = document.getElementById('grid-container');
-const nonImageElements = document.querySelectorAll('body > :not(img)');
-const originalParents = new Map();
-const fullImage = document.querySelector('.full-image');
-const projectVideos = document.querySelectorAll('.project-video');
-const muteButton = document.getElementById('muteBtn');
-let isGridViewActive = false;
-let scrollPosition = { x: 0, y: 0 };
-let fullImageOriginalHeight = fullImage.offsetHeight;
+  function addComboClass(image) {
+    if (image.naturalHeight > image.naturalWidth) {
+      image.classList.add('portrait');
+      image.classList.remove('landscape');
+    } else {
+      image.classList.add('landscape');
+      image.classList.remove('portrait');
+    }
+  }
+
+  function fadeInImage(image) {
+    image.style.opacity = '0';
+    image.style.transition = 'opacity ' + (fadeInDuration / 1000) + 's';
+    setTimeout(function () {
+      image.style.opacity = '1';
+    }, 0);
+  }
+
+  function fadeInVideo(video) {
+    video.style.opacity = '0';
+    video.style.transition = 'opacity ' + (fadeInDuration / 1000) + 's';
+    setTimeout(function () {
+      video.style.opacity = '1';
+    }, 0);
+  }
+
+  const gridButton = document.getElementById('grid');
+  const closeButton = document.getElementById('close');
+  const gridContainer = document.getElementById('grid-container');
+  const nonImageElements = document.querySelectorAll('body > :not(img)');
+  const originalParents = new Map();
+  const fullImage = document.querySelector('.full-image');
+  const projectVideos = document.querySelectorAll('.project-video');
+  const muteButton = document.getElementById('muteBtn');
+  let isGridViewActive = false;
+  let scrollPosition = { x: 0, y: 0 };
+  let fullImageOriginalHeight = fullImage.offsetHeight;
 
 gridButton.addEventListener('click', function () {
   if (isGridViewActive) {
