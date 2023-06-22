@@ -256,7 +256,7 @@ gridButton.addEventListener('click', function () {
   }
 
 function initializeScript() {
-  applyImageStyles(); // Move the call to applyImageStyles() here
+  addComboClass(image); // Move the call to applyImageStyles() here
 
   handleViewportChange();
   window.addEventListener('scroll', handleViewportChange);
