@@ -255,11 +255,13 @@ gridButton.addEventListener('click', function () {
     }
   }
 
-  function initializeScript() {
-    handleViewportChange();
-    window.addEventListener('scroll', handleViewportChange);
-    window.addEventListener('resize', handleViewportChange);
-  }
+function initializeScript() {
+  applyImageStyles(); // Move the call to applyImageStyles() here
+
+  handleViewportChange();
+  window.addEventListener('scroll', handleViewportChange);
+  window.addEventListener('resize', handleViewportChange);
+}
 
  function applyPortraitImageWidth() {
   const portraitImages = Array.from(document.querySelectorAll('img'));
