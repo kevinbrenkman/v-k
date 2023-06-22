@@ -253,10 +253,17 @@ fadeInVideo(video);
     }
   }
 
+	function exitGridViewOnResize() {
+  if (window.innerWidth < 992 && isGridViewActive) {
+    exitGridView();
+  }
+}
+
   function initializeScript() {
     handleViewportChange();
     window.addEventListener('scroll', handleViewportChange);
     window.addEventListener('resize', handleViewportChange);
+  window.addEventListener('resize', exitGridViewOnResize); // Call exitGridViewOnResize on window resize
   }
 
  function applyPortraitImageWidth() {
