@@ -93,6 +93,8 @@ gridButton.addEventListener('click', function () {
   } else {
     enterGridView();
     hideMuteButton();
+fadeInImage(image);
+fadeInVideo(video);
     fullImage.style.height = 'auto';
     applyImageStyles();
   }
