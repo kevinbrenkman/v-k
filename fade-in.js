@@ -1,4 +1,4 @@
-    var fadeDuration = 750; // Duration of the fade animation in milliseconds
+var fadeDuration = 750; // Duration of the fade animation in milliseconds
     var initialAnimationComplete = false; // Flag to track if initial animation is completed
 
     function startFadeAnimation() {
