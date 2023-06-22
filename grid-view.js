@@ -49,6 +49,16 @@ function applyImageStyles() {
     });
   }
 
+  function addComboClass(image) {
+    if (image.naturalHeight > image.naturalWidth) {
+      image.classList.add('portrait');
+      image.classList.remove('landscape');
+    } else {
+      image.classList.add('landscape');
+      image.classList.remove('portrait');
+    }
+  }
+
   function fadeInImage(image) {
     image.style.opacity = '0';
     image.style.transition = 'opacity ' + (fadeInDuration / 1000) + 's';
@@ -245,9 +255,35 @@ gridButton.addEventListener('click', function () {
     }
   }
 
+  function initializeScript() {
+    handleViewportChange();
+    window.addEventListener('scroll', handleViewportChange);
+    window.addEventListener('resize', handleViewportChange);
+  }
 
+ function applyPortraitImageWidth() {
+  const portraitImages = Array.from(document.querySelectorAll('img'));
 
+  portraitImages.forEach(function (image) {
+    adjustImageWidth(image);
 
+    if (!image.complete) {
+      image.addEventListener('load', function () {
+        adjustImageWidth(image);
+      });
+    }
+  });
+}
+
+function adjustImageWidth(image) {
+  if (image.naturalHeight > image.naturalWidth) {
+    image.style.width = '100%';
+    image.style.columnSpan = '1';
+  } else {
+    image.style.width = '100%';
+    image.style.columnSpan = '2';
+  }
+}
 
 
   function restorePortraitImageWidth() {
@@ -263,44 +299,3 @@ gridButton.addEventListener('click', function () {
   }
 
   document.addEventListener('DOMContentLoaded', initializeScript);
-
-	function initializeScript() {
-
-  function addComboClass(image) {
-    if (image.naturalHeight > image.naturalWidth) {
-      image.classList.add('portrait');
-      image.classList.remove('landscape');
-    } else {
-      image.classList.add('landscape');
-      image.classList.remove('portrait');
-    }
-  }
-	
-function adjustImageWidth(image) {
-  if (image.naturalHeight > image.naturalWidth) {
-    image.style.width = '100%';
-    image.style.columnSpan = '1';
-  } else {
-    image.style.width = '100%';
-    image.style.columnSpan = '2';
-  }
-}
-
-  handleViewportChange();
-  window.addEventListener('scroll', handleViewportChange);
-  window.addEventListener('resize', handleViewportChange);
-}
-
- function applyPortraitImageWidth() {
-  const portraitImages = Array.from(document.querySelectorAll('img'));
-
-  portraitImages.forEach(function (image) {
-    adjustImageWidth(image);
-
-    if (!image.complete) {
-      image.addEventListener('load', function () {
-        adjustImageWidth(image);
-      });
-    }
-  });
-}
