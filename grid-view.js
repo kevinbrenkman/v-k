@@ -245,7 +245,26 @@ gridButton.addEventListener('click', function () {
     }
   }
 
-function initializeScript() {
+
+
+
+
+
+  function restorePortraitImageWidth() {
+    const portraitImages = Array.from(document.querySelectorAll('img'));
+
+    portraitImages.forEach(function(image) {
+      image.addEventListener('load', function() {
+        if (image.naturalHeight > image.naturalWidth) {
+          image.style.width = '';
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initializeScript);
+
+	function initializeScript() {
 
   function addComboClass(image) {
     if (image.naturalHeight > image.naturalWidth) {
@@ -285,20 +304,3 @@ function adjustImageWidth(image) {
     }
   });
 }
-
-
-
-
-  function restorePortraitImageWidth() {
-    const portraitImages = Array.from(document.querySelectorAll('img'));
-
-    portraitImages.forEach(function(image) {
-      image.addEventListener('load', function() {
-        if (image.naturalHeight > image.naturalWidth) {
-          image.style.width = '';
-        }
-      });
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', initializeScript);
