@@ -1,4 +1,3 @@
-<script>
     var fadeDuration = 750; // Duration of the fade animation in milliseconds
     var initialAnimationComplete = false; // Flag to track if initial animation is completed
 
@@ -45,10 +44,8 @@
         startFadeAnimation();
         initialAnimationComplete = true;
     });
-</script>
 
 
-<script>
 function applyImageStyles() {
   const images = Array.from(document.querySelectorAll('img'));
   const videos = Array.from(document.querySelectorAll('video'));
@@ -350,4 +347,3 @@ function adjustImageWidth(image) {
   }
 
   document.addEventListener('DOMContentLoaded', initializeScript);
-</script>
