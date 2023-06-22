@@ -49,16 +49,6 @@ function applyImageStyles() {
     });
   }
 
-  function addComboClass(image) {
-    if (image.naturalHeight > image.naturalWidth) {
-      image.classList.add('portrait');
-      image.classList.remove('landscape');
-    } else {
-      image.classList.add('landscape');
-      image.classList.remove('portrait');
-    }
-  }
-
   function fadeInImage(image) {
     image.style.opacity = '0';
     image.style.transition = 'opacity ' + (fadeInDuration / 1000) + 's';
@@ -256,7 +246,26 @@ gridButton.addEventListener('click', function () {
   }
 
 function initializeScript() {
-  addComboClass(image); // Move the call to applyImageStyles() here
+
+  function addComboClass(image) {
+    if (image.naturalHeight > image.naturalWidth) {
+      image.classList.add('portrait');
+      image.classList.remove('landscape');
+    } else {
+      image.classList.add('landscape');
+      image.classList.remove('portrait');
+    }
+  }
+	
+function adjustImageWidth(image) {
+  if (image.naturalHeight > image.naturalWidth) {
+    image.style.width = '100%';
+    image.style.columnSpan = '1';
+  } else {
+    image.style.width = '100%';
+    image.style.columnSpan = '2';
+  }
+}
 
   handleViewportChange();
   window.addEventListener('scroll', handleViewportChange);
@@ -277,15 +286,7 @@ function initializeScript() {
   });
 }
 
-function adjustImageWidth(image) {
-  if (image.naturalHeight > image.naturalWidth) {
-    image.style.width = '100%';
-    image.style.columnSpan = '1';
-  } else {
-    image.style.width = '100%';
-    image.style.columnSpan = '2';
-  }
-}
+
 
 
   function restorePortraitImageWidth() {
