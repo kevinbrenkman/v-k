@@ -22,9 +22,6 @@ function applyImageStyles() {
 
   videos.forEach(function (video) {
     video.addEventListener('loadedmetadata', function () {
-      if (isGridViewActive) {
-        video.style.gridColumn = 'span 2';
-      }
       videosToAnimate.push(video);
       checkAnimationCompletion();
     });
@@ -132,7 +129,6 @@ gridButton.addEventListener('click', function () {
     onComplete: function() {
       mediaElements.forEach(function(element) {
         if (element.tagName === 'VIDEO') {
-          element.style.gridColumn = 'span 2'; // Apply grid span of 2 to videos
           element.removeAttribute('controls');
         }
         originalParents.set(element, element.parentNode);
@@ -278,10 +274,8 @@ gridButton.addEventListener('click', function () {
 function adjustImageWidth(image) {
   if (image.naturalHeight > image.naturalWidth) {
     image.style.width = '100%';
-    image.style.columnSpan = '1';
   } else {
     image.style.width = '100%';
-    image.style.columnSpan = '2';
   }
 }
 
