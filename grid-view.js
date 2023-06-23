@@ -296,4 +296,6 @@ function adjustImageWidth(image) {
     });
   }
 
+	}
+
   document.addEventListener('DOMContentLoaded', initializeScript);
