@@ -27,7 +27,10 @@ function applyImageStyles() {
   videos.forEach(function (video) {
     video.addEventListener('loadedmetadata', function () {
       if (isGridViewActive) {
-        video.style.gridColumn = 'span 2';
+        setTimeout(function () {
+          video.style.gridColumn = 'span 2';
+          fadeInVideo(video);
+        }, 300); // Delay applying gridColumn to videos
       }
     });
   });
@@ -38,16 +41,23 @@ function fadeInImage(image) {
   image.style.transition = 'opacity 0.3s';
 }
 
+function fadeInVideo(video) {
+  video.style.opacity = '0';
+  video.style.transition = 'opacity 0.3s';
+  video.addEventListener('transitionend', function () {
+    video.style.opacity = '1';
+  });
+}
+
 function fadeVideosIn() {
   const videos = Array.from(document.querySelectorAll('video'));
   videos.forEach(function (video) {
-    video.style.opacity = '0';
-    video.style.transition = 'opacity 0.3s';
     video.addEventListener('transitionend', function () {
       video.style.opacity = '1';
     });
   });
 }
+
 
 
 
