@@ -36,7 +36,7 @@ function addComboClass(image) {
 
 function fadeInImage(image) {
   image.style.opacity = '0';
-  image.style.transition = 'opacity 0.3s';
+  image.style.transition = 'opacity 0.3s ease'; // Set transition timing function to "ease"
   setTimeout(function () {
     image.style.opacity = '1';
     fadeInVideo(image); // Call fadeInVideo within fadeInImage
@@ -45,11 +45,12 @@ function fadeInImage(image) {
 
 function fadeInVideo(video) {
   video.style.opacity = '0';
-  video.style.transition = 'opacity 0.3s';
+  video.style.transition = 'opacity 0.3s ease'; // Set transition timing function to "ease"
   setTimeout(function () {
     video.style.opacity = '1';
   }, 0);
 }
+
 
 const gridButton = document.getElementById('grid');
 const closeButton = document.getElementById('close');
