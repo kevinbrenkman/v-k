@@ -39,6 +39,7 @@ function fadeInImage(image) {
   image.style.transition = 'opacity 0.3s';
   setTimeout(function () {
     image.style.opacity = '1';
+    fadeInVideo(image); // Call fadeInVideo within fadeInImage
   }, 0);
 }
 
