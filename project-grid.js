@@ -200,7 +200,7 @@ gridButton.addEventListener('click', function () {
 
   gsap.to(fadeOutElements, { opacity: 0, duration: 0.3 });
 
-  gridButton.textContent = 'View as grid';
+  gridButton.textContent = 'Grid view';
 
   isGridViewActive = false;
 	handleViewportChange(); // Add this line to call handleViewportChange function
