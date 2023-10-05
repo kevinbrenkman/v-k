@@ -93,12 +93,6 @@ gridButton.addEventListener('click', function () {
   const navigation = document.querySelector('.navigation');
   const mobileNavWrap = document.querySelector('.mobile-nav-wrap');
 
-     fadeOutElements.forEach(function(element) {
-    // Store original background colors in a data attribute
-    element.dataset.originalBackgroundColor = window.getComputedStyle(element).backgroundColor;
-    element.style.backgroundColor = 'transparent';
-  });
-    
   scrollPosition.x = window.scrollX;
   scrollPosition.y = window.scrollY;
 
@@ -166,17 +160,8 @@ gridButton.addEventListener('click', function () {
   const thumbnailVideos = Array.from(document.querySelectorAll('.thumbnail-video'));
   const navigation = document.querySelector('.navigation');
   const mobileNavWrap = document.querySelector('.mobile-nav-wrap');
-  const mediaElements = Array.from(document.querySelectorAll('img, video'));
-  const fadeOutElements = mediaElements.filter(
-    (element) => !element.classList.contains('full-image') && !element.classList.contains('thumbnail-video')
-  );
 
- fadeOutElements.forEach(function(element) {
-    // Restore original background colors from the data attribute
-    if (element.dataset.originalBackgroundColor) {
-      element.style.backgroundColor = element.dataset.originalBackgroundColor;
-    }
-  });
+  const mediaElements = Array.from(document.querySelectorAll('img, video'));
 
   nonImageElements.forEach(function(element) {
     if (
@@ -208,33 +193,18 @@ gridButton.addEventListener('click', function () {
     video.style.position = 'absolute';
   });
 
-  // Restore original background colors
-  fadeOutElements.forEach((element) => {
-    element.style.backgroundColor = originalBackgroundColors.get(element);
-  });
+  // Exclude .full-image and .thumbnail-video from fading out
+  const fadeOutElements = mediaElements.filter(
+    (element) => !element.classList.contains('full-image') && !element.classList.contains('thumbnail-video')
+  );
 
-  // Fade in the image in the viewport
-  const visibleImages = fadeOutElements.filter(isInViewport);
-  if (visibleImages.length > 0) {
-    gsap.to(visibleImages[0], {
-      opacity: 1,
-      duration: 0.5,
-      onComplete: function() {
-        // Restore the fade out animation
-        gsap.to(fadeOutElements, { opacity: 0, duration: 0.3 });
-      },
-    });
-  } else {
-    // If no visible images, just restore the fade out animation
-    gsap.to(fadeOutElements, { opacity: 0, duration: 0.3 });
-  }
+  gsap.to(fadeOutElements, { opacity: 0, duration: 0.3 });
 
   gridButton.textContent = 'Grid view';
 
   isGridViewActive = false;
-  handleViewportChange();
+	handleViewportChange(); // Add this line to call handleViewportChange function
 }
-
 
   function showMuteButton() {
     muteButton.style.display = 'block';
