@@ -160,8 +160,16 @@ gridButton.addEventListener('click', function () {
   const thumbnailVideos = Array.from(document.querySelectorAll('.thumbnail-video'));
   const navigation = document.querySelector('.navigation');
   const mobileNavWrap = document.querySelector('.mobile-nav-wrap');
-
   const mediaElements = Array.from(document.querySelectorAll('img, video'));
+  const fadeOutElements = mediaElements.filter(
+    (element) => !element.classList.contains('full-image') && !element.classList.contains('thumbnail-video')
+  );
+
+  // Store original background colors
+  const originalBackgroundColors = new Map();
+  fadeOutElements.forEach((element) => {
+    originalBackgroundColors.set(element, window.getComputedStyle(element).backgroundColor);
+  });
 
   nonImageElements.forEach(function(element) {
     if (
@@ -193,18 +201,33 @@ gridButton.addEventListener('click', function () {
     video.style.position = 'absolute';
   });
 
-  // Exclude .full-image and .thumbnail-video from fading out
-  const fadeOutElements = mediaElements.filter(
-    (element) => !element.classList.contains('full-image') && !element.classList.contains('thumbnail-video')
-  );
+  // Restore original background colors
+  fadeOutElements.forEach((element) => {
+    element.style.backgroundColor = originalBackgroundColors.get(element);
+  });
 
-  gsap.to(fadeOutElements, { opacity: 0, duration: 0.3 });
+  // Fade in the image in the viewport
+  const visibleImages = fadeOutElements.filter(isInViewport);
+  if (visibleImages.length > 0) {
+    gsap.to(visibleImages[0], {
+      opacity: 1,
+      duration: 0.5,
+      onComplete: function() {
+        // Restore the fade out animation
+        gsap.to(fadeOutElements, { opacity: 0, duration: 0.3 });
+      },
+    });
+  } else {
+    // If no visible images, just restore the fade out animation
+    gsap.to(fadeOutElements, { opacity: 0, duration: 0.3 });
+  }
 
   gridButton.textContent = 'Grid view';
 
   isGridViewActive = false;
-	handleViewportChange(); // Add this line to call handleViewportChange function
+  handleViewportChange();
 }
+
 
   function showMuteButton() {
     muteButton.style.display = 'block';
