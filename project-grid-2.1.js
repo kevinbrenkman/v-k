@@ -93,6 +93,12 @@ gridButton.addEventListener('click', function () {
   const navigation = document.querySelector('.navigation');
   const mobileNavWrap = document.querySelector('.mobile-nav-wrap');
 
+     fadeOutElements.forEach(function(element) {
+    // Store original background colors in a data attribute
+    element.dataset.originalBackgroundColor = window.getComputedStyle(element).backgroundColor;
+    element.style.backgroundColor = 'transparent';
+  });
+    
   scrollPosition.x = window.scrollX;
   scrollPosition.y = window.scrollY;
 
@@ -165,10 +171,11 @@ gridButton.addEventListener('click', function () {
     (element) => !element.classList.contains('full-image') && !element.classList.contains('thumbnail-video')
   );
 
-  // Store original background colors
-  const originalBackgroundColors = new Map();
-  fadeOutElements.forEach((element) => {
-    originalBackgroundColors.set(element, window.getComputedStyle(element).backgroundColor);
+ fadeOutElements.forEach(function(element) {
+    // Restore original background colors from the data attribute
+    if (element.dataset.originalBackgroundColor) {
+      element.style.backgroundColor = element.dataset.originalBackgroundColor;
+    }
   });
 
   nonImageElements.forEach(function(element) {
