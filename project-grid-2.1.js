@@ -112,11 +112,15 @@ gridButton.addEventListener('click', function () {
 
   fullImage.style.position = 'relative';
 
+  const fadeOutElements = mediaElements.filter(
+    (element) => !element.classList.contains('full-image') && !element.classList.contains('thumbnail-video')
+  );
+
   gsap.to(mediaElements, {
     duration: 0.5,
     opacity: 0,
     onComplete: function() {
-      mediaElements.forEach(function(element) {
+      fadeOutElements.forEach(function(element) {
         if (element.tagName === 'VIDEO') {
           element.style.gridColumn = 'span 2'; // Apply grid span of 2 to videos
           element.removeAttribute('controls');
@@ -146,6 +150,7 @@ gridButton.addEventListener('click', function () {
 
   isGridViewActive = true;
 }
+
 
 
 
