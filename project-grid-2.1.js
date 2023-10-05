@@ -92,7 +92,7 @@ gridButton.addEventListener('click', function () {
   const thumbnailVideos = Array.from(document.querySelectorAll('.thumbnail-video'));
   const navigation = document.querySelector('.navigation');
   const mobileNavWrap = document.querySelector('.mobile-nav-wrap');
-
+  
   scrollPosition.x = window.scrollX;
   scrollPosition.y = window.scrollY;
 
@@ -135,14 +135,6 @@ gridButton.addEventListener('click', function () {
         video.style.position = 'relative';
       });
 
-      projectVideos.forEach(function(video) {
-        video.style.width = '100%';
-        video.style.height = '100%';
-        video.style.objectFit = 'cover';
-        video.style.marginBottom = '0';
-        video.style.marginTop = '0';
-      });
-
       window.scrollTo(0, gridContainer.offsetTop);
 
       navigation.classList.remove('invert');
@@ -154,6 +146,7 @@ gridButton.addEventListener('click', function () {
 
   isGridViewActive = true;
 }
+
 
 
 function exitGridView() {
