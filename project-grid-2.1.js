@@ -156,7 +156,7 @@ gridButton.addEventListener('click', function () {
 }
 
 
- function exitGridView() {
+function exitGridView() {
   const thumbnailVideos = Array.from(document.querySelectorAll('.thumbnail-video'));
   const navigation = document.querySelector('.navigation');
   const mobileNavWrap = document.querySelector('.mobile-nav-wrap');
@@ -193,6 +193,20 @@ gridButton.addEventListener('click', function () {
     video.style.position = 'absolute';
   });
 
+  const fadeOutElements = mediaElements.filter(
+    (element) => !element.classList.contains('full-image') && !element.classList.contains('thumbnail-video')
+  );
+
+  fadeOutElements.forEach(function(element) {
+    // Restore original background colors from the data attribute
+    if (element.dataset.originalBackgroundColor) {
+      element.style.backgroundColor = element.dataset.originalBackgroundColor;
+    } else {
+      // If no original background color is stored, set it to transparent
+      element.style.backgroundColor = 'transparent';
+    }
+  });
+
   // Exclude .full-image and .thumbnail-video from fading out
   const fadeOutElements = mediaElements.filter(
     (element) => !element.classList.contains('full-image') && !element.classList.contains('thumbnail-video')
@@ -203,8 +217,9 @@ gridButton.addEventListener('click', function () {
   gridButton.textContent = 'Grid view';
 
   isGridViewActive = false;
-	handleViewportChange(); // Add this line to call handleViewportChange function
+  handleViewportChange(); // Add this line to call handleViewportChange function
 }
+
 
   function showMuteButton() {
     muteButton.style.display = 'block';
